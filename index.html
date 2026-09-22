@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Foundry VTT systems and modules by Gus Santos - JavaScript, UI and data pipelines for virtual tabletops.">
+<meta property="og:title" content="Gus Santos - Foundry Works">
+<meta property="og:description" content="Foundry VTT systems and modules: JavaScript, UI and data pipelines for virtual tabletops.">
+<meta property="og:type" content="website">
+<style>
+  :root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Gus Santos — Foundry Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#F6F4F0; --surface:#FFFFFF; --surface-2:#ECE8E1; --border:#DED7CC;
+    --text:#15181C; --muted:#5C636E; --accent:#B4531A; --accent-ink:#8F4114;
+    --accent-soft:rgba(180,83,26,.10); --ok:#2C7A51; --shadow:0 1px 2px rgba(20,16,10,.06),0 8px 24px rgba(20,16,10,.06);
+    --display:"Syne","Trebuchet MS",system-ui,sans-serif;
+    --body:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1216; --surface:#161C22; --surface-2:#1C242C; --border:#2A343E;
+      --text:#E8ECF1; --muted:#96A2AF; --accent:#F08A3C; --accent-ink:#F5A662;
+      --accent-soft:rgba(240,138,60,.13); --ok:#4FBF85; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1216; --surface:#161C22; --surface-2:#1C242C; --border:#2A343E;
+    --text:#E8ECF1; --muted:#96A2AF; --accent:#F08A3C; --accent-ink:#F5A662;
+    --accent-soft:rgba(240,138,60,.13); --ok:#4FBF85; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  ::selection{background:var(--accent-soft)}
+  .wrap{width:100%;max-width:1120px;margin-inline:auto;padding-inline:20px}
+
+  /* ---- header ---- */
+  header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .bar-in{display:flex;align-items:center;gap:18px;min-height:58px}
+  .brand{font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:17px;text-decoration:none;white-space:nowrap}
+  .brand span{color:var(--accent)}
+  nav.links{display:flex;gap:16px;margin-left:auto;font-size:13.5px}
+  nav.links a{color:var(--muted);text-decoration:none;padding:4px 0;border-bottom:1px solid transparent}
+  nav.links a:hover{color:var(--text);border-bottom-color:var(--accent)}
+  .lang{display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;font-family:var(--mono);font-size:11.5px}
+  .lang button{appearance:none;border:0;background:transparent;color:var(--muted);padding:5px 10px;cursor:pointer;font:inherit;letter-spacing:.06em}
+  .lang button[aria-pressed="true"]{background:var(--accent);color:#fff}
+  @media(max-width:720px){nav.links{display:none}}
+
+  /* ---- hero ---- */
+  .hero{padding-block:56px 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:start}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,54px);line-height:1.04;letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance}
+  .lede{font-size:17px;color:var(--muted);max-width:56ch;margin:0 0 22px}
+  .lede strong{color:var(--text);font-weight:600}
+  .cta{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);text-decoration:none;font-size:14px;font-weight:500;transition:border-color .15s,transform .15s}
+  .btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+
+  .manifest{font-family:var(--mono);font-size:12.5px;line-height:1.85;white-space:pre;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);overflow-x:auto}
+  .manifest .k{color:var(--accent)}
+  .manifest .s{color:var(--muted)}
+  .manifest .c{color:var(--muted);opacity:.7}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:34px}
+  .stat{background:var(--bg);padding:16px 18px}
+  .stat b{display:block;font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.02em;line-height:1.1}
+  .stat span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  @media(max-width:860px){.hero{grid-template-columns:1fr;gap:30px;padding-block:38px 28px}.stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---- sections ---- */
+  section{padding-block:46px;border-top:1px solid var(--border)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+  h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;margin:0;text-wrap:balance}
+  .sec-note{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  /* ---- feature rows (systems) ---- */
+  .feature{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;padding-block:26px}
+  .feature+.feature{border-top:1px dashed var(--border)}
+  .feature:nth-child(even) .feature-media{order:2}
+  @media(max-width:860px){.feature{grid-template-columns:1fr;gap:20px}.feature:nth-child(even) .feature-media{order:0}}
+
+  /* ---- cards ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .kicker{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:5px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid color-mix(in srgb,var(--accent) 28%,transparent)}
+  .chip.plain{background:transparent;color:var(--muted);border-color:var(--border)}
+  h3{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0}
+  .feature h3{font-size:clamp(22px,2.6vw,28px)}
+  .meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+  .meta .dot{opacity:.4}
+  .desc{font-size:14.5px;color:var(--muted);margin:0}
+  .feature .desc{font-size:16px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .tag{font-size:11.5px;font-family:var(--mono);color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 9px}
+  .card-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:auto;padding-top:6px;font-size:13.5px}
+  .card-links a{color:var(--accent-ink);text-decoration:none;font-weight:500;border-bottom:1px solid transparent}
+  .card-links a:hover{border-bottom-color:currentColor}
+
+  /* ---- carousel ---- */
+  .shot{position:relative;background:var(--surface-2);border-bottom:1px solid var(--border);aspect-ratio:16/10;overflow:hidden}
+  .feature-media .shot{border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
+  .track{display:flex;height:100%;transition:transform .42s cubic-bezier(.22,.7,.3,1)}
+  .slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--surface-2)}
+  .slide img{width:100%;height:100%;object-fit:contain}
+  .nav-btn{position:absolute;top:50%;translate:0 -50%;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:color-mix(in srgb,var(--surface) 86%,transparent);color:var(--text);cursor:pointer;display:grid;place-items:center;opacity:0;transition:opacity .2s,background .2s;font-size:15px;line-height:1;padding:0}
+  .shot:hover .nav-btn,.shot:focus-within .nav-btn{opacity:1}
+  .nav-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  .nav-btn.prev{left:8px}.nav-btn.next{right:8px}
+  .dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px}
+  .dot-btn{width:6px;height:6px;border-radius:50%;border:0;padding:0;background:color-mix(in srgb,var(--text) 30%,transparent);cursor:pointer;transition:width .2s,background .2s}
+  .dot-btn[aria-current="true"]{width:18px;border-radius:3px;background:var(--accent)}
+  .counter{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:5px;background:color-mix(in srgb,var(--surface) 80%,transparent);border:1px solid var(--border);color:var(--muted)}
+  .noshot{position:absolute;inset:0;display:grid;place-content:center;gap:6px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:20px;background:
+    repeating-linear-gradient(135deg,transparent 0 10px,color-mix(in srgb,var(--text) 4%,transparent) 10px 11px)}
+  .noshot b{font-size:13px;color:var(--text);font-weight:500}
+  @media(prefers-reduced-motion:reduce){.track{transition:none}.btn:hover{transform:none}}
+
+  /* ---- craft / about ---- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  @media(max-width:860px){.two{grid-template-columns:1fr}}
+  .notes{display:grid;gap:14px}
+  .note{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+  .note .num{font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px}
+  .note p{margin:0;font-size:14.5px;color:var(--muted)}
+  .note b{color:var(--text);font-weight:600}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+  .panel h3{margin-bottom:8px}
+  .panel p{font-size:14.5px;color:var(--muted);margin:0 0 12px}
+  .panel .card-links{margin-top:0}
+
+  /* ---- contact ---- */
+  .contact{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  footer{border-top:1px solid var(--border);padding-block:26px 40px;font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+</style>
+
+</head>
+<body>
+<header class="bar">
+  <div class="wrap bar-in">
+    <a class="brand" href="#top">Gus <span>Santos</span></a>
+    <nav class="links">
+      <a href="#systems" data-i18n="nav.systems">Game systems</a>
+      <a href="#modules" data-i18n="nav.modules">Modules</a>
+      <a href="#craft" data-i18n="nav.craft">How it's built</a>
+      <a href="#beyond" data-i18n="nav.beyond">3D &amp; video</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language / Idioma">
+      <button type="button" id="lang-es" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow" data-i18n="hero.eyebrow">Foundry VTT developer · Valencia, Spain</p>
+      <h1 data-i18n="hero.title">Game tools that ship, in the hands of real tables.</h1>
+      <p class="lede" data-i18n="hero.lede" data-i18n-html="1">I build <strong>systems and modules for Foundry VTT</strong> — JavaScript ES modules, custom UI layers, data pipelines and compendium content — released publicly, versioned, and maintained with the players who use them. Day job: level art and 3D for Unreal Engine 5.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/mordachai" target="_blank" rel="noopener">GitHub · mordachai ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/gustavo3d/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="mailto:gus.santos3d@gmail.com" data-i18n="hero.email">Email me</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>13</b><span data-i18n="stat.projects">Shipped packages</span></div>
+        <div class="stat"><b>2</b><span data-i18n="stat.systems">Full game systems</span></div>
+        <div class="stat"><b>v13–14</b><span data-i18n="stat.compat">Foundry compat</span></div>
+        <div class="stat"><b>14+</b><span data-i18n="stat.years">Years in 3D &amp; games</span></div>
+      </div>
+    </div>
+    <div class="manifest" aria-hidden="true">
+<span class="c">// module.json</span>
+{
+  <span class="k">"id"</span>: <span class="s">"gus-santos"</span>,
+  <span class="k">"title"</span>: <span class="s">"Creative developer / level artist"</span>,
+  <span class="k">"authors"</span>: [{ <span class="k">"name"</span>: <span class="s">"Gus"</span>, <span class="k">"discord"</span>: <span class="s">"gus4294"</span> }],
+  <span class="k">"languages"</span>: [<span class="s">"pt-BR"</span>, <span class="s">"es"</span>, <span class="s">"en"</span>],
+  <span class="k">"stack"</span>: [<span class="s">"JavaScript (ESM)"</span>, <span class="s">"Foundry API"</span>,
+             <span class="s">"Handlebars"</span>, <span class="s">"CSS"</span>, <span class="s">"UE5"</span>, <span class="s">"Blender"</span>],
+  <span class="k">"compatibility"</span>: { <span class="k">"foundry"</span>: <span class="s">"13 → 14"</span> },
+  <span class="k">"status"</span>: <span class="s">"open to work"</span>
+}
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="systems">
+      <div class="sec-head">
+        <h2 data-i18n="systems.h">Game systems</h2>
+        <p class="sec-note" data-i18n="systems.note">Full rule implementations: sheets, compendia, automation, localization.</p>
+      </div>
+      <div id="systems-list"></div>
+    </section>
+
+    <section id="modules">
+      <div class="sec-head">
+        <h2 data-i18n="modules.h">Modules &amp; content</h2>
+        <p class="sec-note" data-i18n="modules.note">Each one installs from its own manifest URL and updates through GitHub Releases.</p>
+      </div>
+      <div class="grid" id="modules-list"></div>
+    </section>
+
+    <section id="craft">
+      <div class="sec-head">
+        <h2 data-i18n="craft.h">How it's built</h2>
+        <p class="sec-note" data-i18n="craft.note">Same answers I'd give in a technical interview.</p>
+      </div>
+      <div class="two">
+        <div class="notes">
+          <div class="note"><span class="num">01</span><p data-i18n="craft.1" data-i18n-html="1"><b>Vanilla JavaScript, ES modules.</b> No framework: Foundry's own Application/Hooks API, Handlebars templates and scoped CSS. Larger packages are split into modules by concern — rolls, HUD, settings, NPC logic.</p></div>
+          <div class="note"><span class="num">02</span><p data-i18n="craft.2" data-i18n-html="1"><b>UI over an existing canvas.</b> Most of these are interface work: HUDs and panels that sit on a PIXI canvas without fighting it, drag-and-drop on the scene, live sync between GM and player clients via socket events.</p></div>
+          <div class="note"><span class="num">03</span><p data-i18n="craft.3" data-i18n-html="1"><b>Data and content pipelines.</b> Compendium packs (14 in Vagabond, 8 in Xeno Dead Zone), JSON mapping layers for art, importers that read an external web API and map it onto actor schemas.</p></div>
+          <div class="note"><span class="num">04</span><p data-i18n="craft.4" data-i18n-html="1"><b>Released like software.</b> Semantic versions, tagged GitHub Releases with a manifest each, compatibility ranges declared per Foundry version, migration notes when a schema changes.</p></div>
+          <div class="note"><span class="num">05</span><p data-i18n="craft.5" data-i18n-html="1"><b>Maintained in public.</b> Issues, feature requests and bug reports from real tables, plus localization (en / pt-BR) and documentation written for non-technical GMs.</p></div>
+        </div>
+        <div class="panel">
+          <h3 data-i18n="craft.stack.h">Stack</h3>
+          <p data-i18n="craft.stack.p">JavaScript (ESM), Foundry VTT API, Handlebars, HTML/CSS, Git &amp; GitHub Releases, JSON schemas, Babele localization, Unreal Engine 5, Blender, Substance, Photoshop, n8n / Make automation.</p>
+          <h3 data-i18n="craft.open.h">Also worth knowing</h3>
+          <p data-i18n="craft.open.p">Everything here is public and readable — clone any repo and the whole history is there: commits, issues, releases, and how the code changed between Foundry v13 and v14.</p>
+          <div class="card-links">
+            <a href="https://github.com/mordachai?tab=repositories" target="_blank" rel="noopener" data-i18n="craft.open.link">Browse all repositories ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beyond">
+      <div class="sec-head">
+        <h2 data-i18n="beyond.h">3D, level art &amp; video</h2>
+        <p class="sec-note" data-i18n="beyond.note">The other half of the practice.</p>
+      </div>
+      <div class="two">
+        <div class="panel">
+          <h3 data-i18n="beyond.art.h">Level art &amp; 3D</h3>
+          <p data-i18n="beyond.art.p">14+ years of 3D and image work: level art and environments in Unreal Engine 5, modelling and lookdev in Blender, archviz and real-time configurators. Current collaboration: UE5 project work with Desert Saber.</p>
+          <div class="card-links"><a href="https://www.artstation.com/gustavo_santos" target="_blank" rel="noopener">ArtStation ↗</a></div>
+        </div>
+        <div class="panel">
+          <h3 data-i18n="beyond.yt.h">Gus Render Factory</h3>
+          <p data-i18n="beyond.yt.p">YouTube channel with CG tutorials, demos and walkthroughs of the systems and modules on this page — the same explanatory work that goes into the documentation.</p>
+          <div class="card-links"><a href="https://www.youtube.com/@GusRenderFactory" target="_blank" rel="noopener">YouTube ↗</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head">
+        <h2 data-i18n="contact.h">Get in touch</h2>
+        <p class="sec-note" data-i18n="contact.note">Valencia, Spain · remote-friendly · ES / PT / EN</p>
+      </div>
+      <div class="contact">
+        <a class="btn primary" href="mailto:gus.santos3d@gmail.com">gus.santos3d@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/gustavo3d/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/mordachai" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="https://www.artstation.com/gustavo_santos" target="_blank" rel="noopener">ArtStation ↗</a>
+        <a class="btn" href="https://www.youtube.com/@GusRenderFactory" target="_blank" rel="noopener">YouTube ↗</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <footer>
+      <span data-i18n="footer.left">Built and maintained by Gus Santos · versions as of September 2026</span>
+      <span>github.com/mordachai</span>
+    </footer>
+  </div>
+</main>
+
+<script>
+const GH = "https://github.com/mordachai/";
+const UA = "https://github.com/user-attachments/assets/";
+
+const PROJECTS = [
+  { id:"vagabond", repo:"vagabond", kind:"system", title:"Vagabond", pkg:"vagabond", version:"5.40.1", compat:"13 → 14",
+    tags:["ESM","14 compendium packs","en / pt-BR","Co-developed"],
+    en:"The community Foundry implementation of Taron Pounds' Vagabond pulp-fantasy RPG (unofficial). Character and adversary sheets, 14 compendium packs, automatic flanking detection and the PW3 ruleset, built over five major release lines with the game's author and community.",
+    es:"Adaptación no oficial a Foundry del juego de rol pulp fantasy Vagabond, de Taron Pounds. Fichas de personaje y de adversarios, 14 compendios, detección automática de flanqueo y el reglamento PW3, desarrollado a lo largo de cinco líneas de versión mayores junto al autor y a la comunidad.",
+    local:["images/vagabond/splash.webp"],
+    remote:["2cdfc134-11a7-4419-9480-be8d9cdfbafe","8f3f9aad-080e-4e97-b156-49bac0b7af5c","812ae3c7-b2a3-49dc-b2a8-2aa274d9823a","bdd42738-4d78-4199-8a49-1de9e6d92a09","15c8ba80-a0d2-4343-b6c3-5221cf7f096d"] },
+
+  { id:"xdz", repo:"xdz", kind:"system", title:"Xeno Dead Zone", pkg:"xdz", version:"2.5.1", compat:"13 → 14",
+    tags:["ESM","Procedural generation","Public JS API","8 compendium packs"],
+    en:"Sci-fi horror system with a procedural map generator that assembles 16-location ships and colonies from modular art, a mission and escalation engine that writes its own briefing journals, door and lighting automation, and a documented public API (xdz.api.*) so GMs can drive all of it from macros.",
+    es:"Sistema de terror de ciencia ficción con un generador procedural que arma naves y colonias de 16 localizaciones a partir de arte modular, un motor de misiones y escaladas que redacta sus propios diarios de sesión, automatización de puertas e iluminación, y una API pública documentada (xdz.api.*) para controlarlo todo desde macros.",
+    local:["images/xdz/splash.webp"], remote:[] },
+
+  { id:"investigation-board", repo:"investigation-board", kind:"module", title:"Investigation Board", pkg:"investigation-board", version:"5.9.0", compat:"14",
+    tags:["Real-time sync","Canvas UI","Theming","17★ · 19 forks"],
+    en:"A collaborative corkboard on the scene: sticky notes, photo notes and connection lines that every player can create, edit and move, synced live across clients. Swappable board themes (cork, sci-fi holo) with matching pins, stamps and circuit-style links. The most used of my modules.",
+    es:"Un tablero de investigación colaborativo sobre la escena: notas adhesivas, fotos y líneas de conexión que cualquier jugador puede crear, editar y mover, sincronizadas en vivo entre clientes. Temas intercambiables (corcho, holograma sci-fi) con chinchetas, sellos y conexiones tipo circuito. El módulo más usado de todos.",
+    local:[], remote:["5d78e7f3-c9ca-4aba-8894-f42035a21a2c","3db14754-1884-48dd-87ac-6de9434c9c3f","48162afa-0e73-424b-b49c-8140e9b27beb","0f636b1c-8eda-489a-8074-0becf0927e42","d16b91cd-e1f2-4067-9b33-93c56a9d2c83","f5bec180-be0a-4b4f-828c-508eb1819c60"] },
+
+  { id:"mist-hud", repo:"mist-hud", kind:"module", title:"Mist Engine HUD", pkg:"mist-hud", version:"2.50.2", compat:"13",
+    tags:["12 ES modules","3 game lines","Roll pipeline","en / pt-BR"],
+    en:"An always-open, never-in-the-way HUD for City of Mist, Otherscape and Legend in the Mist. Players pick tags and statuses straight from the token and roll from the hotbar — no dialogs, no menus. Twelve ES modules cover rolls, dice, NPC influence, status notifications and per-system move sets.",
+    es:"Un HUD siempre visible y nunca estorbando para City of Mist, Otherscape y Legend in the Mist. Los jugadores eligen etiquetas y estados desde el propio token y tiran desde la barra rápida: sin diálogos ni menús. Doce módulos ES cubren tiradas, dados, influencia de PNJ, notificaciones de estado y los movimientos de cada sistema.",
+    local:["images/mist-hud/pcsHUDs.webp","images/mist-hud/LitMScreen.webp","images/mist-hud/OSScreen.webp","images/mist-hud/CoMScreen.webp","images/mist-hud/npcHUDs.webp","images/mist-hud/osTags.webp","images/mist-hud/dice.webp"],
+    remote:[] },
+
+  { id:"metamorph", repo:"metamorph", kind:"module", title:"Metamorph", pkg:"metamorph", version:"1.5.0", compat:"14", branch:"master",
+    tags:["System agnostic","Token prototypes","HUD extension"],
+    en:"Any actor can have several forms — boss phases, polymorph, lycanthropes, doppelgangers. A token HUD button opens a form picker and swaps the token to a completely different actor sheet, carrying appearance, size, bars, light and vision from the target's prototype, with optional shared HP. Works on any system.",
+    es:"Cualquier actor puede tener varias formas: fases de jefe, polimorfia, licántropos, doppelgängers. Un botón en el HUD del token abre el selector y cambia el token a una ficha completamente distinta, heredando aspecto, tamaño, barras, luz y visión del prototipo de destino, con vida compartida opcional. Agnóstico de sistema.",
+    local:[], remote:["1a3411e1-a8d8-4dce-8314-aa15625ab338","bc8ea023-e888-4ed9-b9e8-0ef9806374ed","7d2cbbbd-d4e0-4679-9aed-4ec987b350d6","f3db253b-12c0-4bc7-b890-17b59ee8d085","f4dabac1-036b-4fc0-b7cb-6a8232a042bc"] },
+
+  { id:"daggerheart-hud", repo:"daggerheart-hud", kind:"module", title:"Daggerheart HUD", pkg:"daggerheart-hud", version:"2.0.4", compat:"13 → 14",
+    tags:["Player UI","Theme carousel","Module API"],
+    en:"A player-side heads-up display for Daggerheart: Hope, HP, Stress and Armor as click-and-right-click pip tracks, weapons always at hand, traits, inventory and class panels on a nav strip — the whole sheet reduced to what you touch during play. Other modules can register their own actions into its menu.",
+    es:"Un HUD para jugadores de Daggerheart: Esperanza, vida, estrés y armadura como marcadores de clic izquierdo y derecho, armas siempre a mano, y paneles de rasgos, inventario y clase en una barra de navegación: la ficha entera reducida a lo que de verdad se toca durante la partida. Otros módulos pueden registrar sus acciones en su menú.",
+    local:[], remote:["3467de17-da5a-42fb-b0a3-b92b6d0ec7db","e13ea1d6-726b-4cf4-9b3a-1c73011bfed0"] },
+
+  { id:"daggerheart-gm-hud", repo:"daggerheart-gm-hud", kind:"module", title:"Daggerheart GM HUD", pkg:"daggerheart-gm-hud", version:"2.1.0", compat:"13 → 14",
+    tags:["GM tooling","Adversaries & NPCs","Grouped features"],
+    en:"The GM counterpart: adversary and NPC information where the GM is already looking. Attacks and difficulty badges for adversaries, and an NPC layout built around what NPCs actually have — features grouped into passive, action and reaction, plus motives and GM notes.",
+    es:"La contraparte del DJ: información de adversarios y PNJ justo donde el DJ ya está mirando. Ataques e indicadores de dificultad para adversarios, y una disposición de PNJ pensada para lo que un PNJ realmente tiene: rasgos agrupados en pasivos, acciones y reacciones, además de motivaciones y notas del DJ.",
+    local:[], remote:["569ea625-be40-49c0-b9a4-c3c9aedbe13c","e2c18bb2-f58c-4aec-b7c9-0423aaebcb33","f7f5c9a2-49d0-428a-9330-c40391c92c54","55af0288-a3c4-4b9a-a771-e768bc8e68f1"] },
+
+  { id:"tactical-map", repo:"tactical-map", kind:"module", title:"Tactical Map", pkg:"tactical-map", version:"3.1.0", compat:"13 → 14",
+    tags:["Scene layers","Token art switching","Bulk config"],
+    en:"One click flips a scene between its narrative art and a tactical map, with grid conversion handled underneath. Tokens can swap to alternative art per map type, so a theatre-of-the-mind game can drop into a grid fight and back without ever leaving the scene.",
+    es:"Un clic alterna la escena entre su arte narrativo y un mapa táctico, gestionando la conversión de rejilla por debajo. Los tokens pueden cambiar a arte alternativo según el tipo de mapa, de modo que una partida de teatro de la mente pasa a un combate con rejilla y vuelve sin salir nunca de la escena.",
+    local:[], remote:["55b116aa-aa0d-41c1-8d3a-0dc57686cd15","7de3e12d-018c-4abb-be8d-b91bd4c4c453","af073b58-4ea2-4809-8c2f-28fbd4b43fc5","67ddc0b4-1104-481d-adad-33c0c73d008a","b2589eec-8645-4213-b0cc-bb3c968ccada"] },
+
+  { id:"escalating-encounters", repo:"escalating-encounters", kind:"module", title:"Escalating Encounters", pkg:"escalating-encounters", version:"1.3.1", compat:"13 → 14",
+    tags:["Trigger engine","Foundry hooks","System agnostic"],
+    en:"Sequential, trigger-driven encounter tables: each table advances step by step and fires on scene entry, a macro call, a Foundry hook or a manual push. Written to run The Count, the Castle & the Curse hands-free, then generalised to any system or adventure.",
+    es:"Tablas de encuentros secuenciales guiadas por disparadores: cada tabla avanza paso a paso y se activa al entrar en una escena, por macro, por un hook de Foundry o manualmente. Nació para automatizar la aventura The Count, the Castle & the Curse y se generalizó a cualquier sistema.",
+    local:[], remote:["7ac29acc-799f-4743-b2df-d28a2a6a0933","30d2afbb-3f72-429e-a971-45de63436db3","47598ba5-a14c-4ad2-9faa-d1346be63a04","db2f3a0a-2f13-407b-a5b3-60d6ee3f2b94"] },
+
+  { id:"macro-button", repo:"macro-button", kind:"module", title:"Macro Button", pkg:"macro-button", version:"1.4.0", compat:"13 → 14",
+    tags:["Drag & drop","Permissions","Canvas notes"],
+    en:"Drag a macro from the sidebar onto the canvas and it becomes a button on the scene: custom icon, label and size, with per-player permissions so the table can trigger exactly what the GM allows.",
+    es:"Arrastra una macro desde la barra lateral al lienzo y se convierte en un botón sobre la escena: icono, etiqueta y tamaño personalizables, con permisos por jugador para que la mesa dispare exactamente lo que el DJ permita.",
+    local:[], remote:["edb127df-694f-4cc6-9feb-555e0cc3df2b","06122815-61ed-466d-860c-9a2f2f8d7b6d"] },
+
+  { id:"vagabond-app-importer", repo:"vagabond-app-importer", kind:"module", title:"Vagabond App Importer", pkg:"vgbnd-importer", version:"2.6.0", compat:"13 → 14",
+    tags:["External API","Authentication","Schema mapping"],
+    en:"Bridges the Vagabond Tag Along web app (vgbnd.app) and Foundry: players sign in from inside Foundry, browse their characters and import them as fully mapped Vagabond actors. Authenticated requests against a third-party service, mapped onto the system's data schema.",
+    es:"Puente entre la app web Vagabond Tag Along (vgbnd.app) y Foundry: los jugadores inician sesión desde el propio Foundry, ven sus personajes y los importan como actores del sistema Vagabond completamente mapeados. Peticiones autenticadas a un servicio externo, mapeadas al esquema de datos del sistema.",
+    local:[], remote:["46ad4ce3-d642-448a-8fe1-4e1b5501ed3d"] },
+
+  { id:"ccc-vagabond", repo:"ccc-vagabond", kind:"content", title:"The Count, the Castle & the Curse", pkg:"ccc-vagabond", version:"1.4.0", compat:"13 → 14",
+    tags:["Adventure build","6 packs","Babele en / pt-BR"],
+    en:"A full Foundry build of A.B. Bo's gothic one-shot for the Vagabond system: scenes, tokens, journals, art and music, plus the adventure's signature mechanics automated — a rising Stress Level driven by rooms explored, horrors witnessed and real time at the table. Ships with a Brazilian Portuguese translation layer.",
+    es:"Adaptación completa a Foundry de la aventura gótica de A.B. Bo para el sistema Vagabond: escenas, tokens, diarios, arte y música, con sus mecánicas características automatizadas — un Nivel de Estrés que sube con cada sala explorada, cada horror presenciado y cada hora real de juego. Incluye capa de traducción al portugués de Brasil.",
+    local:[], remote:["fd5bd274-514a-46bd-bd0b-41f1bf38d720","f82b0f01-99de-4888-8ce8-6a478bf1ff3a","ea40d118-9652-4794-962f-2babeec7e05c"] },
+
+  { id:"art-for-daggerheart", repo:"art-for-daggerheart", kind:"content", title:"Art for Daggerheart", pkg:"art-for-daggerheart", version:"1.1.4", compat:"13 → 14",
+    tags:["JSON mapping","Wildcard tokens","Art direction"],
+    en:"Custom portraits and tokens for every adversary in the Daggerheart corebook, wired in through a JSON mapping layer: pick wildcard tokens that rotate each time a creature hits the table, or clean circular ones, with Foundry token rings supported.",
+    es:"Retratos y tokens propios para todos los adversarios del libro básico de Daggerheart, conectados mediante una capa de mapeo JSON: tokens comodín que rotan cada vez que una criatura llega a la mesa, o versiones circulares limpias, compatibles con los anillos de token de Foundry.",
+    local:[], remote:["1f6fca88-9c88-409c-81f3-234c0ecc724e","ac460812-58af-433d-afbf-299c08f99728","084f1980-3585-4f41-937b-28a89589fa7a"] }
+];
+
+const I18N = {
+  es:{
+    "nav.systems":"Sistemas","nav.modules":"Módulos","nav.craft":"Cómo está hecho","nav.beyond":"3D y vídeo","nav.contact":"Contacto",
+    "hero.eyebrow":"Desarrollador de Foundry VTT · Valencia, España",
+    "hero.title":"Herramientas de juego que se publican y llegan a mesas reales.",
+    "hero.lede":"Desarrollo <strong>sistemas y módulos para Foundry VTT</strong>: JavaScript en módulos ES, capas de interfaz propias, pipelines de datos y contenido de compendios, publicados en abierto, versionados y mantenidos junto a quienes los usan. En paralelo: level art y 3D para Unreal Engine 5.",
+    "hero.email":"Escríbeme",
+    "stat.projects":"Paquetes publicados","stat.systems":"Sistemas completos","stat.compat":"Compatibilidad Foundry","stat.years":"Años en 3D y juegos",
+    "systems.h":"Sistemas de juego","systems.note":"Implementaciones completas: fichas, compendios, automatización y localización.",
+    "modules.h":"Módulos y contenido","modules.note":"Cada uno se instala desde su propio manifiesto y se actualiza vía GitHub Releases.",
+    "craft.h":"Cómo está hecho","craft.note":"Las mismas respuestas que daría en una entrevista técnica.",
+    "craft.1":"<b>JavaScript puro, módulos ES.</b> Sin framework: la API de Application y Hooks de Foundry, plantillas Handlebars y CSS acotado. Los paquetes grandes se dividen por responsabilidad: tiradas, HUD, ajustes, lógica de PNJ.",
+    "craft.2":"<b>Interfaz sobre un lienzo existente.</b> Casi todo es trabajo de UI: HUDs y paneles que conviven con un canvas PIXI sin estorbarlo, arrastrar y soltar sobre la escena, y sincronización en vivo entre cliente del DJ y de los jugadores mediante sockets.",
+    "craft.3":"<b>Datos y contenido.</b> Compendios (14 en Vagabond, 8 en Xeno Dead Zone), capas de mapeo JSON para el arte, e importadores que leen una API web externa y la traducen al esquema de actores.",
+    "craft.4":"<b>Publicado como software.</b> Versionado semántico, releases etiquetadas en GitHub con su manifiesto, rangos de compatibilidad declarados por versión de Foundry y notas de migración cuando cambia un esquema.",
+    "craft.5":"<b>Mantenido en público.</b> Incidencias, peticiones y reportes de mesas reales, además de localización (en / pt-BR) y documentación escrita para DJs sin perfil técnico.",
+    "craft.stack.h":"Stack",
+    "craft.stack.p":"JavaScript (ESM), API de Foundry VTT, Handlebars, HTML/CSS, Git y GitHub Releases, esquemas JSON, localización con Babele, Unreal Engine 5, Blender, Substance, Photoshop, automatización con n8n / Make.",
+    "craft.open.h":"Además","craft.open.p":"Todo esto es público y legible: clona cualquier repositorio y ahí está el historial completo — commits, incidencias, releases y cómo cambió el código entre Foundry v13 y v14.",
+    "craft.open.link":"Ver todos los repositorios ↗",
+    "beyond.h":"3D, level art y vídeo","beyond.note":"La otra mitad del oficio.",
+    "beyond.art.h":"Level art y 3D",
+    "beyond.art.p":"Más de 14 años de 3D e imagen: level art y entornos en Unreal Engine 5, modelado y lookdev en Blender, archviz y configuradores en tiempo real. Colaboración actual: proyectos UE5 con Desert Saber.",
+    "beyond.yt.h":"Gus Render Factory",
+    "beyond.yt.p":"Canal de YouTube con tutoriales de CG, demos y recorridos por los sistemas y módulos de esta página: el mismo trabajo de explicación que va en la documentación.",
+    "contact.h":"Hablemos","contact.note":"Valencia, España · disponible en remoto · ES / PT / EN",
+    "footer.left":"Hecho y mantenido por Gus Santos · versiones a septiembre de 2026",
+    "ui.repo":"Repositorio ↗","ui.releases":"Releases ↗","ui.install":"Manifiesto de instalación ↗",
+    "ui.kind.system":"Sistema","ui.kind.module":"Módulo","ui.kind.content":"Contenido",
+    "ui.noshot":"Capturas en el repositorio","ui.prev":"Imagen anterior","ui.next":"Imagen siguiente","ui.version":"versión","ui.foundry":"Foundry"
+  },
+  en:{
+    "ui.repo":"Repository ↗","ui.releases":"Releases ↗","ui.install":"Install manifest ↗",
+    "ui.kind.system":"System","ui.kind.module":"Module","ui.kind.content":"Content",
+    "ui.noshot":"Screenshots in the repository","ui.prev":"Previous image","ui.next":"Next image","ui.version":"version","ui.foundry":"Foundry"
+  }
+};
+
+/* keep the English source strings as the EN dictionary */
+const EN_DOM = {};
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+  EN_DOM[el.dataset.i18n] = el.dataset.i18nHtml ? el.innerHTML : el.textContent;
+});
+Object.assign(I18N.en, EN_DOM);
+
+let LANG = "en";
+const t = k => (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || k;
+
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function shotMarkup(p){
+  /* each slide walks a chain: bundled webp -> locally fetched png -> the image in the README */
+  const chains = [].concat(
+    p.local.map(l=>[l]),
+    p.remote.map((u,i)=>[`images/${p.repo}/r${i}.webp`, `images/${p.repo}/r${i}.png`, UA+u])
+  );
+  if(!chains.length){
+    return `<div class="shot"><div class="noshot"><b>${esc(p.title)}</b><span data-ui="noshot">${t("ui.noshot")}</span></div></div>`;
+  }
+  const slides = chains.map((c,i)=>
+    `<div class="slide"><img loading="lazy" decoding="async" src="${esc(c[0])}" data-chain='${esc(JSON.stringify(c.slice(1)))}' alt="${esc(p.title)} — screenshot ${i+1}"></div>`
+  ).join("");
+  const dots = chains.map((_,i)=>`<button class="dot-btn" type="button" data-go="${i}" aria-current="${i===0}" aria-label="${i+1}"></button>`).join("");
+  const multi = chains.length>1;
+  return `<div class="shot" data-carousel tabindex="0" role="group" aria-roledescription="carousel" aria-label="${esc(p.title)}">
+    <div class="track">${slides}</div>
+    ${multi?`<button class="nav-btn prev" type="button" data-step="-1" aria-label="${t("ui.prev")}">\u2039</button>
+    <button class="nav-btn next" type="button" data-step="1" aria-label="${t("ui.next")}">\u203a</button>
+    <div class="counter"><span class="cur">1</span>/${chains.length}</div>
+    <div class="dots">${dots}</div>`:""}
+  </div>`;
+}
+
+function linksMarkup(p){
+  const manifest = p.kind==="system"
+    ? `${GH}${p.repo}/releases/latest/download/system.json`
+    : `${GH}${p.repo}/releases/latest/download/module.json`;
+  return `<div class="card-links">
+    <a href="${GH}${p.repo}" target="_blank" rel="noopener" data-ui="repo">${t("ui.repo")}</a>
+    <a href="${GH}${p.repo}/releases" target="_blank" rel="noopener" data-ui="releases">${t("ui.releases")}</a>
+    <a href="${manifest}" target="_blank" rel="noopener" data-ui="install">${t("ui.install")}</a>
+  </div>`;
+}
+
+function metaMarkup(p){
+  return `<div class="meta"><span>${esc(p.pkg)}</span><span class="dot">·</span><span>v${esc(p.version)}</span><span class="dot">·</span><span data-ui="foundry-line">${t("ui.foundry")} ${esc(p.compat)}</span></div>`;
+}
+
+function cardMarkup(p){
+  return `<article class="card" data-project="${p.id}">
+    ${shotMarkup(p)}
+    <div class="card-body">
+      <div class="kicker"><span class="chip" data-ui="kind" data-kind="${p.kind}">${t("ui.kind."+p.kind)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      ${metaMarkup(p)}
+      <p class="desc" data-desc>${esc(p[LANG])}</p>
+      <div class="tags">${p.tags.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</div>
+      ${linksMarkup(p)}
+    </div>
+  </article>`;
+}
+
+function featureMarkup(p){
+  return `<article class="feature" data-project="${p.id}">
+    <div class="feature-media">${shotMarkup(p)}</div>
+    <div class="card-body" style="padding:0">
+      <div class="kicker"><span class="chip" data-ui="kind" data-kind="${p.kind}">${t("ui.kind."+p.kind)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      ${metaMarkup(p)}
+      <p class="desc" data-desc>${esc(p[LANG])}</p>
+      <div class="tags">${p.tags.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</div>
+      ${linksMarkup(p)}
+    </div>
+  </article>`;
+}
+
+function render(){
+  document.getElementById("systems-list").innerHTML =
+    PROJECTS.filter(p=>p.kind==="system").map(featureMarkup).join("");
+  document.getElementById("modules-list").innerHTML =
+    PROJECTS.filter(p=>p.kind!=="system").map(cardMarkup).join("");
+  wireCarousels();
+  wireFallbacks();
+}
+
+/* remote images are a fallback for repos whose shots aren't bundled locally;
+   if neither resolves, drop the slide rather than show a broken frame */
+function wireFallbacks(){
+  document.querySelectorAll(".slide img").forEach(img=>{
+    img.addEventListener("error", ()=>{
+      let chain = [];
+      try{ chain = JSON.parse(img.dataset.chain || "[]"); }catch(e){}
+      if(chain.length){
+        const next = chain.shift();
+        img.dataset.chain = JSON.stringify(chain);
+        img.src = next;
+        return;
+      }
+      const shot = img.closest(".shot");
+      const slide = img.closest(".slide");
+      slide.remove();
+      if(shot && !shot.querySelector(".slide")){
+        const title = shot.getAttribute("aria-label") || "";
+        shot.innerHTML = `<div class="noshot"><b>${esc(title)}</b><span data-ui="noshot">${t("ui.noshot")}</span></div>`;
+      } else if(shot){ resetCarousel(shot); }
+    });
+  });
+}
+
+function resetCarousel(shot){
+  const slides = shot.querySelectorAll(".slide");
+  const counter = shot.querySelector(".counter");
+  const dots = shot.querySelector(".dots");
+  if(slides.length<2){
+    shot.querySelectorAll(".nav-btn").forEach(b=>b.remove());
+    if(counter) counter.remove();
+    if(dots) dots.remove();
+  } else if(dots){
+    dots.innerHTML = [...slides].map((_,i)=>`<button class="dot-btn" type="button" data-go="${i}" aria-current="${i===0}" aria-label="${i+1}"></button>`).join("");
+    if(counter) counter.innerHTML = `<span class="cur">1</span>/${slides.length}`;
+  }
+  shot.dataset.index = "0";
+  const track = shot.querySelector(".track");
+  if(track) track.style.transform = "translateX(0%)";
+}
+
+function wireCarousels(){
+  document.querySelectorAll("[data-carousel]").forEach(shot=>{
+    shot.dataset.index = "0";
+    const go = n => {
+      const slides = shot.querySelectorAll(".slide");
+      if(!slides.length) return;
+      const i = (n + slides.length) % slides.length;
+      shot.dataset.index = String(i);
+      shot.querySelector(".track").style.transform = `translateX(-${i*100}%)`;
+      const cur = shot.querySelector(".cur"); if(cur) cur.textContent = String(i+1);
+      shot.querySelectorAll(".dot-btn").forEach((d,di)=>d.setAttribute("aria-current", String(di===i)));
+    };
+    shot.addEventListener("click", e=>{
+      const step = e.target.closest("[data-step]");
+      const dot = e.target.closest("[data-go]");
+      if(step) go(Number(shot.dataset.index) + Number(step.dataset.step));
+      else if(dot) go(Number(dot.dataset.go));
+    });
+    shot.addEventListener("keydown", e=>{
+      if(e.key==="ArrowRight"){ e.preventDefault(); go(Number(shot.dataset.index)+1); }
+      if(e.key==="ArrowLeft"){ e.preventDefault(); go(Number(shot.dataset.index)-1); }
+    });
+    let x0=null;
+    shot.addEventListener("touchstart", e=>{ x0 = e.changedTouches[0].clientX; }, {passive:true});
+    shot.addEventListener("touchend", e=>{
+      if(x0===null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx)>40) go(Number(shot.dataset.index) + (dx<0?1:-1));
+      x0=null;
+    }, {passive:true});
+  });
+}
+
+function applyLang(lang){
+  LANG = (lang==="es") ? "es" : "en";
+  document.documentElement.lang = LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const v = t(el.dataset.i18n);
+    if(el.dataset.i18nHtml) el.innerHTML = v; else el.textContent = v;
+  });
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===LANG)));
+  document.querySelectorAll("[data-project]").forEach(node=>{
+    const p = PROJECTS.find(x=>x.id===node.dataset.project);
+    if(!p) return;
+    node.querySelector("[data-desc]").textContent = p[LANG];
+    const kind = node.querySelector('[data-ui="kind"]');
+    kind.textContent = t("ui.kind."+kind.dataset.kind);
+    node.querySelector('[data-ui="repo"]').textContent = t("ui.repo");
+    node.querySelector('[data-ui="releases"]').textContent = t("ui.releases");
+    node.querySelector('[data-ui="install"]').textContent = t("ui.install");
+    const fl = node.querySelector('[data-ui="foundry-line"]');
+    if(fl) fl.textContent = `${t("ui.foundry")} ${p.compat}`;
+    node.querySelectorAll('[data-ui="noshot"]').forEach(n=>n.textContent = t("ui.noshot"));
+    node.querySelectorAll('[data-step="-1"]').forEach(n=>n.setAttribute("aria-label", t("ui.prev")));
+    node.querySelectorAll('[data-step="1"]').forEach(n=>n.setAttribute("aria-label", t("ui.next")));
+  });
+  try{ localStorage.setItem("gus-lang", LANG); }catch(e){}
+}
+
+let start = "en";
+try{
+  const saved = localStorage.getItem("gus-lang");
+  if(saved==="es"||saved==="en") start = saved;
+  else if((navigator.language||"").toLowerCase().startsWith("es")) start = "es";
+}catch(e){
+  if((navigator.language||"").toLowerCase().startsWith("es")) start = "es";
+}
+
+render();
+applyLang(start);
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click", ()=>applyLang(b.dataset.lang)));
+</script>
+
+</body>
+</html>
