@@ -307,7 +307,7 @@ const PROJECTS = [
     remote:["0effc483-42f9-4b5c-8943-21cf2228a376","27d40394-7356-4961-a36b-d035ef0bf31e","8a379a1f-117a-4f1e-9d0f-5d2fc23315f5","85c87d98-a597-43ad-afa7-b7b589743422","6a1800f4-bef8-4c91-966f-4068071c8ebe","1cb6c97b-ed86-43ec-a7fe-a8a97cd39e49"] },
 
   { id:"investigation-board", repo:"investigation-board", kind:"module", title:"Investigation Board", pkg:"investigation-board", version:"5.9.0", compat:"14",
-    tags:["Real-time sync","Canvas UI","Theming","17★ · 19 forks"],
+    tags:["Real-time sync","Canvas UI","Theming","System agnostic"],
     en:"A collaborative corkboard on the scene: sticky notes, photo notes and connection lines that every player can create, edit and move, synced live across clients. Swappable board themes (cork, sci-fi holo) with matching pins, stamps and circuit-style links. The most used of my modules.",
     es:"Un tablero de investigación colaborativo sobre la escena: notas adhesivas, fotos y líneas de conexión que cualquier jugador puede crear, editar y mover, sincronizadas en vivo entre clientes. Temas intercambiables (corcho, holograma sci-fi) con chinchetas, sellos y conexiones tipo circuito. El módulo más usado de todos.",
     local:[], remote:["3db14754-1884-48dd-87ac-6de9434c9c3f","5d78e7f3-c9ca-4aba-8894-f42035a21a2c","48162afa-0e73-424b-b49c-8140e9b27beb","0f636b1c-8eda-489a-8074-0becf0927e42","d16b91cd-e1f2-4067-9b33-93c56a9d2c83","f5bec180-be0a-4b4f-828c-508eb1819c60"] },
@@ -319,19 +319,19 @@ const PROJECTS = [
     local:[], remote:["1a3411e1-a8d8-4dce-8314-aa15625ab338","bc8ea023-e888-4ed9-b9e8-0ef9806374ed","7d2cbbbd-d4e0-4679-9aed-4ec987b350d6","f3db253b-12c0-4bc7-b890-17b59ee8d085","f4dabac1-036b-4fc0-b7cb-6a8232a042bc"] },
 
   { id:"daggerheart-hud", repo:"daggerheart-hud", kind:"module", title:"Daggerheart HUD", pkg:"daggerheart-hud", version:"2.0.4", compat:"13 → 14",
-    tags:["Player UI","Theme carousel","Module API"],
+    tags:["Player UI","Theme carousel","Module API","Daggerheart"],
     en:"A player-side heads-up display for Daggerheart: Hope, HP, Stress and Armor as click-and-right-click pip tracks, weapons always at hand, traits, inventory and class panels on a nav strip — the whole sheet reduced to what you touch during play. Other modules can register their own actions into its menu.",
     es:"Un HUD para jugadores de Daggerheart: Esperanza, vida, estrés y armadura como marcadores de clic izquierdo y derecho, armas siempre a mano, y paneles de rasgos, inventario y clase en una barra de navegación: la ficha entera reducida a lo que de verdad se toca durante la partida. Otros módulos pueden registrar sus acciones en su menú.",
     local:[], remote:["3467de17-da5a-42fb-b0a3-b92b6d0ec7db","e13ea1d6-726b-4cf4-9b3a-1c73011bfed0"] },
 
   { id:"daggerheart-gm-hud", repo:"daggerheart-gm-hud", kind:"module", title:"Daggerheart GM HUD", pkg:"daggerheart-gm-hud", version:"2.1.0", compat:"13 → 14",
-    tags:["GM tooling","Adversaries & NPCs","Grouped features"],
+    tags:["GM tooling","Adversaries & NPCs","Grouped features","Daggerheart"],
     en:"The GM counterpart: adversary and NPC information where the GM is already looking. Attacks and difficulty badges for adversaries, and an NPC layout built around what NPCs actually have — features grouped into passive, action and reaction, plus motives and GM notes.",
     es:"La contraparte del DJ: información de adversarios y PNJ justo donde el DJ ya está mirando. Ataques e indicadores de dificultad para adversarios, y una disposición de PNJ pensada para lo que un PNJ realmente tiene: rasgos agrupados en pasivos, acciones y reacciones, además de motivaciones y notas del DJ.",
     local:[], remote:["569ea625-be40-49c0-b9a4-c3c9aedbe13c","e2c18bb2-f58c-4aec-b7c9-0423aaebcb33","f7f5c9a2-49d0-428a-9330-c40391c92c54","55af0288-a3c4-4b9a-a771-e768bc8e68f1"] },
 
   { id:"tactical-map", repo:"tactical-map", kind:"module", title:"Tactical Map", pkg:"tactical-map", version:"3.1.0", compat:"13 → 14",
-    tags:["Scene layers","Token art switching","Bulk config"],
+    tags:["Scene layers","Token art switching","Bulk config","System agnostic"],
     en:"One click flips a scene between its narrative art and a tactical map, with grid conversion handled underneath. Tokens can swap to alternative art per map type, so a theatre-of-the-mind game can drop into a grid fight and back without ever leaving the scene.",
     es:"Un clic alterna la escena entre su arte narrativo y un mapa táctico, gestionando la conversión de rejilla por debajo. Los tokens pueden cambiar a arte alternativo según el tipo de mapa, de modo que una partida de teatro de la mente pasa a un combate con rejilla y vuelve sin salir nunca de la escena.",
     local:[], remote:["55b116aa-aa0d-41c1-8d3a-0dc57686cd15","7de3e12d-018c-4abb-be8d-b91bd4c4c453","af073b58-4ea2-4809-8c2f-28fbd4b43fc5","67ddc0b4-1104-481d-adad-33c0c73d008a","b2589eec-8645-4213-b0cc-bb3c968ccada"] },
@@ -343,25 +343,25 @@ const PROJECTS = [
     local:[], remote:["7ac29acc-799f-4743-b2df-d28a2a6a0933","30d2afbb-3f72-429e-a971-45de63436db3","47598ba5-a14c-4ad2-9faa-d1346be63a04","db2f3a0a-2f13-407b-a5b3-60d6ee3f2b94"] },
 
   { id:"macro-button", repo:"macro-button", kind:"module", title:"Macro Button", pkg:"macro-button", version:"1.4.0", compat:"13 → 14",
-    tags:["Drag & drop","Permissions","Canvas notes"],
+    tags:["Drag & drop","Permissions","Canvas notes","System agnostic"],
     en:"Drag a macro from the sidebar onto the canvas and it becomes a button on the scene: custom icon, label and size, with per-player permissions so the table can trigger exactly what the GM allows.",
     es:"Arrastra una macro desde la barra lateral al lienzo y se convierte en un botón sobre la escena: icono, etiqueta y tamaño personalizables, con permisos por jugador para que la mesa dispare exactamente lo que el DJ permita.",
     local:[], remote:["edb127df-694f-4cc6-9feb-555e0cc3df2b","06122815-61ed-466d-860c-9a2f2f8d7b6d"] },
 
   { id:"vagabond-app-importer", repo:"vagabond-app-importer", kind:"module", title:"Vagabond App Importer", pkg:"vgbnd-importer", version:"2.6.0", compat:"13 → 14",
-    tags:["External API","Authentication","Schema mapping"],
+    tags:["External API","Authentication","Schema mapping","Vagabond"],
     en:"Bridges the Vagabond Tag Along web app (vgbnd.app) and Foundry: players sign in from inside Foundry, browse their characters and import them as fully mapped Vagabond actors. Authenticated requests against a third-party service, mapped onto the system's data schema.",
     es:"Puente entre la app web Vagabond Tag Along (vgbnd.app) y Foundry: los jugadores inician sesión desde el propio Foundry, ven sus personajes y los importan como actores del sistema Vagabond completamente mapeados. Peticiones autenticadas a un servicio externo, mapeadas al esquema de datos del sistema.",
     local:[], remote:["46ad4ce3-d642-448a-8fe1-4e1b5501ed3d"] },
 
   { id:"ccc-vagabond", repo:"ccc-vagabond", kind:"content", title:"The Count, the Castle & the Curse", pkg:"ccc-vagabond", version:"1.4.0", compat:"13 → 14",
-    tags:["Adventure build","6 packs","Babele en / pt-BR"],
+    tags:["Adventure build","6 packs","Babele en / pt-BR","Vagabond"],
     en:"A full Foundry build of A.B. Bo's gothic one-shot for the Vagabond system: scenes, tokens, journals, art and music, plus the adventure's signature mechanics automated — a rising Stress Level driven by rooms explored, horrors witnessed and real time at the table. Ships with a Brazilian Portuguese translation layer.",
     es:"Adaptación completa a Foundry de la aventura gótica de A.B. Bo para el sistema Vagabond: escenas, tokens, diarios, arte y música, con sus mecánicas características automatizadas — un Nivel de Estrés que sube con cada sala explorada, cada horror presenciado y cada hora real de juego. Incluye capa de traducción al portugués de Brasil.",
     local:[], remote:["fd5bd274-514a-46bd-bd0b-41f1bf38d720","f82b0f01-99de-4888-8ce8-6a478bf1ff3a","ea40d118-9652-4794-962f-2babeec7e05c"] },
 
   { id:"art-for-daggerheart", repo:"art-for-daggerheart", kind:"content", title:"Art for Daggerheart", pkg:"art-for-daggerheart", version:"1.1.4", compat:"13 → 14",
-    tags:["JSON mapping","Wildcard tokens","Art direction"],
+    tags:["JSON mapping","Wildcard tokens","Art direction","Daggerheart"],
     en:"Custom portraits and tokens for every adversary in the Daggerheart corebook, wired in through a JSON mapping layer: pick wildcard tokens that rotate each time a creature hits the table, or clean circular ones, with Foundry token rings supported.",
     es:"Retratos y tokens propios para todos los adversarios del libro básico de Daggerheart, conectados mediante una capa de mapeo JSON: tokens comodín que rotan cada vez que una criatura llega a la mesa, o versiones circulares limpias, compatibles con los anillos de token de Foundry.",
     local:[], remote:["1f6fca88-9c88-409c-81f3-234c0ecc724e","ac460812-58af-433d-afbf-299c08f99728","084f1980-3585-4f41-937b-28a89589fa7a"] }
