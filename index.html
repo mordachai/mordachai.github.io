@@ -7,6 +7,7 @@
 <meta property="og:title" content="Gus Santos - Foundry Works">
 <meta property="og:description" content="Foundry VTT systems and modules: JavaScript, UI and data pipelines for virtual tabletops.">
 <meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9876;</text></svg>">
 <style>
   :root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
   body{margin:0}
@@ -296,7 +297,7 @@ const PROJECTS = [
     tags:["ESM","14 compendium packs","en / pt-BR","Co-developed"],
     en:"The community Foundry implementation of Taron Pounds' Vagabond pulp-fantasy RPG (unofficial). Character and adversary sheets, 14 compendium packs, automatic flanking detection and the PW3 ruleset, built over five major release lines with the game's author and community.",
     es:"Adaptación no oficial a Foundry del juego de rol pulp fantasy Vagabond, de Taron Pounds. Fichas de personaje y de adversarios, 14 compendios, detección automática de flanqueo y el reglamento PW3, desarrollado a lo largo de cinco líneas de versión mayores junto al autor y a la comunidad.",
-    local:["images/vagabond/splash.webp"],
+    local:["images/vagabond/splash.png"],
     remote:["2cdfc134-11a7-4419-9480-be8d9cdfbafe","8f3f9aad-080e-4e97-b156-49bac0b7af5c","812ae3c7-b2a3-49dc-b2a8-2aa274d9823a","bdd42738-4d78-4199-8a49-1de9e6d92a09","15c8ba80-a0d2-4343-b6c3-5221cf7f096d"] },
 
   { id:"xdz", repo:"xdz", kind:"system", title:"Xeno Dead Zone", pkg:"xdz", version:"2.5.1", compat:"13 → 14",
@@ -311,6 +312,13 @@ const PROJECTS = [
     en:"A collaborative corkboard on the scene: sticky notes, photo notes and connection lines that every player can create, edit and move, synced live across clients. Swappable board themes (cork, sci-fi holo) with matching pins, stamps and circuit-style links. The most used of my modules.",
     es:"Un tablero de investigación colaborativo sobre la escena: notas adhesivas, fotos y líneas de conexión que cualquier jugador puede crear, editar y mover, sincronizadas en vivo entre clientes. Temas intercambiables (corcho, holograma sci-fi) con chinchetas, sellos y conexiones tipo circuito. El módulo más usado de todos.",
     local:[], remote:["3db14754-1884-48dd-87ac-6de9434c9c3f","5d78e7f3-c9ca-4aba-8894-f42035a21a2c","48162afa-0e73-424b-b49c-8140e9b27beb","0f636b1c-8eda-489a-8074-0becf0927e42","d16b91cd-e1f2-4067-9b33-93c56a9d2c83","f5bec180-be0a-4b4f-828c-508eb1819c60"] },
+
+  { id:"mist-hud", repo:"mist-hud", kind:"module", title:"Mist Engine HUD", pkg:"mist-hud", version:"2.50.2", compat:"13",
+    tags:["12 ES modules","3 game lines","Roll pipeline","en / pt-BR"],
+    en:"An always-open, never-in-the-way HUD for City of Mist, Otherscape and Legend in the Mist. Players pick tags and statuses straight from the token and roll from the hotbar — no dialogs, no menus. Twelve ES modules cover rolls, dice, NPC influence, status notifications and per-system move sets.",
+    es:"Un HUD siempre visible y nunca estorbando para City of Mist, Otherscape y Legend in the Mist. Los jugadores eligen etiquetas y estados desde el propio token y tiran desde la barra rápida: sin diálogos ni menús. Doce módulos ES cubren tiradas, dados, influencia de PNJ, notificaciones de estado y los movimientos de cada sistema.",
+    local:["images/mist-hud/pcsHUDs.png","images/mist-hud/LitMScreen.png","images/mist-hud/OSScreen.png","images/mist-hud/CoMScreen.png","images/mist-hud/npcHUDs.png","images/mist-hud/osTags.png","images/mist-hud/dice.png"],
+    remote:[] },
 
   { id:"metamorph", repo:"metamorph", kind:"module", title:"Metamorph", pkg:"metamorph", version:"1.5.0", compat:"14", branch:"master",
     tags:["System agnostic","Token prototypes","HUD extension"],
