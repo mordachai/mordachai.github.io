@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Foundry VTT systems and modules by Gus Santos - JavaScript, UI and data pipelines for virtual tabletops.">
-<meta property="og:title" content="Gus Santos - Foundry Works">
-<meta property="og:description" content="Foundry VTT systems and modules: JavaScript, UI and data pipelines for virtual tabletops.">
+<meta name="description" content="Gus Santos — AI and automation projects, technology implementation, and the teams behind them. Plus open-source Foundry VTT work.">
+<meta property="og:title" content="Gus Santos — AI that works where work happens">
+<meta property="og:description" content="I build and lead AI and automation projects that turn operational problems into working solutions.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9876;</text></svg>">
 <style>
@@ -14,7 +14,7 @@
   img{max-width:100%}
   [hidden]{display:none!important}
 </style>
-<title>Gus Santos — Foundry Works</title>
+<title>Gus Santos — AI, Automation &amp; Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -58,13 +58,13 @@
   .lang{display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;font-family:var(--mono);font-size:11.5px}
   .lang button{appearance:none;border:0;background:transparent;color:var(--muted);padding:5px 10px;cursor:pointer;font:inherit;letter-spacing:.06em}
   .lang button[aria-pressed="true"]{background:var(--accent);color:#fff}
-  @media(max-width:720px){nav.links{display:none}}
+  @media(max-width:820px){nav.links{display:none}}
 
   /* ---- hero ---- */
-  .hero{padding-block:56px 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:start}
+  .hero{padding-block:60px 44px;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
-  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,54px);line-height:1.04;letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance}
-  .lede{font-size:17px;color:var(--muted);max-width:56ch;margin:0 0 22px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.6vw,58px);line-height:1.03;letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance}
+  .lede{font-size:17.5px;color:var(--muted);max-width:52ch;margin:0 0 26px}
   .lede strong{color:var(--text);font-weight:600}
   .cta{display:flex;flex-wrap:wrap;gap:10px}
   .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);text-decoration:none;font-size:14px;font-weight:500;transition:border-color .15s,transform .15s}
@@ -72,22 +72,25 @@
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
   .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
 
-  .manifest{font-family:var(--mono);font-size:12.5px;line-height:1.85;white-space:pre;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);overflow-x:auto}
-  .manifest .k{color:var(--accent)}
-  .manifest .s{color:var(--muted)}
-  .manifest .c{color:var(--muted);opacity:.7}
-
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:34px}
-  .stat{background:var(--bg);padding:16px 18px}
-  .stat b{display:block;font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.02em;line-height:1.1}
-  .stat span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  @media(max-width:860px){.hero{grid-template-columns:1fr;gap:30px;padding-block:38px 28px}.stats{grid-template-columns:repeat(2,1fr)}}
+  /* ---- hero flow diagram ---- */
+  .flow{font-family:var(--mono);font-size:12.5px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:2px}
+  .flow-step{letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 14px;border:1px solid var(--border);border-radius:8px;width:100%;text-align:center;background:var(--bg)}
+  .flow-step.accent{color:#fff;background:var(--accent);border-color:var(--accent);font-weight:600}
+  .flow-arrow{color:var(--muted);opacity:.6;line-height:1}
+  @media(max-width:860px){.hero{grid-template-columns:1fr;gap:30px;padding-block:40px 28px}}
 
   /* ---- sections ---- */
   section{padding-block:46px;border-top:1px solid var(--border)}
   .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:26px}
   h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;margin:0;text-wrap:balance}
   .sec-note{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  /* ---- pillars (what I work on) ---- */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.pillars{grid-template-columns:1fr}}
+  .pillar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 20px;box-shadow:var(--shadow)}
+  .pillar h3{margin:0 0 8px}
+  .pillar p{margin:0;color:var(--muted);font-size:14.5px}
 
   /* ---- feature rows (systems) ---- */
   .feature{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;padding-block:26px}
@@ -158,10 +161,9 @@
   <div class="wrap bar-in">
     <a class="brand" href="#top">Gus <span>Santos</span></a>
     <nav class="links">
-      <a href="#systems" data-i18n="nav.systems">Game systems</a>
-      <a href="#modules" data-i18n="nav.modules">Modules</a>
-      <a href="#craft" data-i18n="nav.craft">How it's built</a>
+      <a href="#foundry" data-i18n="nav.foundry">Open source</a>
       <a href="#beyond" data-i18n="nav.beyond">3D &amp; video</a>
+      <a href="#work" data-i18n="nav.work">What I do</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
     <div class="lang" role="group" aria-label="Language / Idioma">
@@ -174,55 +176,43 @@
 <main id="top">
   <div class="wrap hero">
     <div>
-      <p class="eyebrow" data-i18n="hero.eyebrow">Foundry VTT developer · Valencia, Spain</p>
-      <h1 data-i18n="hero.title">Game tools that ship, in the hands of real tables.</h1>
-      <p class="lede" data-i18n="hero.lede" data-i18n-html="1">I build <strong>systems and modules for Foundry VTT</strong> — JavaScript ES modules, custom UI layers, data pipelines and compendium content — released publicly, versioned, and maintained with the players who use them. This is my weekend project; on weekdays I build automation and tooling for startups and companies.</p>
+      <p class="eyebrow" data-i18n="hero.eyebrow">AI · Automation · Technology · Implementation</p>
+      <h1 data-i18n="hero.title">AI that works where work happens.</h1>
+      <p class="lede" data-i18n="hero.lede">I build and lead AI and automation projects that turn operational problems into working solutions.</p>
       <div class="cta">
-        <a class="btn primary" href="https://github.com/mordachai" target="_blank" rel="noopener">GitHub · mordachai ↗</a>
-        <a class="btn" href="https://www.linkedin.com/in/gustavo3d/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a class="btn" href="mailto:gus.santos3d@gmail.com" data-i18n="hero.email">Email me</a>
-      </div>
-      <div class="stats">
-        <div class="stat"><b>13</b><span data-i18n="stat.projects">Shipped packages</span></div>
-        <div class="stat"><b>2</b><span data-i18n="stat.systems">Full game systems</span></div>
-        <div class="stat"><b>v13–14</b><span data-i18n="stat.compat">Foundry compat</span></div>
-        <div class="stat"><b>14+</b><span data-i18n="stat.years">Years in 3D &amp; games</span></div>
+        <a class="btn primary" href="https://www.linkedin.com/in/gustavo3d/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="#foundry" data-i18n="hero.cta.projects">Open source work</a>
+        <a class="btn" href="https://github.com/mordachai" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
-    <div class="manifest" aria-hidden="true">
-<span class="c">// module.json</span>
-{
-  <span class="k">"id"</span>: <span class="s">"gus-santos"</span>,
-  <span class="k">"title"</span>: <span class="s">"Creative developer / level artist"</span>,
-  <span class="k">"authors"</span>: [{ <span class="k">"name"</span>: <span class="s">"Gus"</span>, <span class="k">"discord"</span>: <span class="s">"gus4294"</span> }],
-  <span class="k">"languages"</span>: [<span class="s">"pt-BR"</span>, <span class="s">"es"</span>, <span class="s">"en"</span>],
-  <span class="k">"stack"</span>: [<span class="s">"JavaScript (ESM)"</span>, <span class="s">"Foundry API"</span>,
-             <span class="s">"Handlebars"</span>, <span class="s">"CSS"</span>, <span class="s">"UE5"</span>, <span class="s">"Blender"</span>],
-  <span class="k">"compatibility"</span>: { <span class="k">"foundry"</span>: <span class="s">"13 → 14"</span> },
-  <span class="k">"status"</span>: <span class="s">"open to work"</span>
-}
+    <div class="flow" aria-hidden="true">
+      <div class="flow-step">Operation</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">Problem</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step accent">AI / Technology</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">Solution</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">Implementation</div>
     </div>
   </div>
 
   <div class="wrap">
-    <section id="systems">
+    <section id="foundry">
       <div class="sec-head">
         <h2 data-i18n="systems.h">Game systems</h2>
         <p class="sec-note" data-i18n="systems.note">Full rule implementations: sheets, compendia, automation, localization.</p>
       </div>
       <div id="systems-list"></div>
-    </section>
 
-    <section id="modules">
-      <div class="sec-head">
+      <div class="sec-head" style="margin-top:30px">
         <h2 data-i18n="modules.h">Modules &amp; content</h2>
         <p class="sec-note" data-i18n="modules.note">Each one installs from its own manifest URL and updates through GitHub Releases.</p>
       </div>
       <div class="grid" id="modules-list"></div>
-    </section>
 
-    <section id="craft">
-      <div class="sec-head">
+      <div class="sec-head" style="margin-top:30px">
         <h2 data-i18n="craft.h">How it's built</h2>
         <p class="sec-note" data-i18n="craft.note">Same answers I'd give in a technical interview.</p>
       </div>
@@ -249,7 +239,7 @@
     <section id="beyond">
       <div class="sec-head">
         <h2 data-i18n="beyond.h">3D, level art &amp; video</h2>
-        <p class="sec-note" data-i18n="beyond.note">The other half of the practice.</p>
+        <p class="sec-note" data-i18n="beyond.note">14+ years in 3D &amp; games — the craft behind the tools.</p>
       </div>
       <div class="two">
         <div class="panel">
@@ -265,14 +255,44 @@
       </div>
     </section>
 
+    <section id="work">
+      <div class="sec-head">
+        <h2 data-i18n="work.h">What I work on</h2>
+      </div>
+      <p class="lede" style="max-width:68ch" data-i18n="work.lede">I put AI and automation into real operations — I learn how a team actually works, find where technology adds real value, and take it into production.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="kicker"><span class="chip">01</span></div>
+          <h3 data-i18n="work.ai.h">AI &amp; Automation</h3>
+          <p data-i18n="work.ai.p">Business process automation, AI workflows, integrations, custom tools.</p>
+        </div>
+        <div class="pillar">
+          <div class="kicker"><span class="chip">02</span></div>
+          <h3 data-i18n="work.tech.h">Technology &amp; Implementation</h3>
+          <p data-i18n="work.tech.p">From operational requirements to prototypes, production systems and deployment.</p>
+        </div>
+        <div class="pillar">
+          <div class="kicker"><span class="chip">03</span></div>
+          <h3 data-i18n="work.teams.h">Teams &amp; Projects</h3>
+          <p data-i18n="work.teams.p">Leading multidisciplinary teams across technology, product and business.</p>
+        </div>
+      </div>
+      <div class="tags" style="margin-top:22px">
+        <span class="tag" data-i18n="work.skill.1">Process analysis</span>
+        <span class="tag" data-i18n="work.skill.2">AI solution design</span>
+        <span class="tag" data-i18n="work.skill.3">Integrations &amp; automation</span>
+        <span class="tag" data-i18n="work.skill.4">Technical project management</span>
+        <span class="tag" data-i18n="work.skill.5">Direct client work</span>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="sec-head">
         <h2 data-i18n="contact.h">Get in touch</h2>
         <p class="sec-note" data-i18n="contact.note">Valencia, Spain · remote-friendly · ES / PT / EN</p>
       </div>
       <div class="contact">
-        <a class="btn primary" href="mailto:gus.santos3d@gmail.com">gus.santos3d@gmail.com</a>
-        <a class="btn" href="https://www.linkedin.com/in/gustavo3d/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn primary" href="https://www.linkedin.com/in/gustavo3d/" target="_blank" rel="noopener">LinkedIn ↗</a>
         <a class="btn" href="https://github.com/mordachai" target="_blank" rel="noopener">GitHub ↗</a>
         <a class="btn" href="https://www.artstation.com/gustavo_santos" target="_blank" rel="noopener">ArtStation ↗</a>
         <a class="btn" href="https://www.youtube.com/@GusRenderFactory" target="_blank" rel="noopener">YouTube ↗</a>
@@ -377,12 +397,17 @@ const PROJECTS = [
 
 const I18N = {
   es:{
-    "nav.systems":"Sistemas","nav.modules":"Módulos","nav.craft":"Cómo está hecho","nav.beyond":"3D y vídeo","nav.contact":"Contacto",
-    "hero.eyebrow":"Desarrollador de Foundry VTT · Valencia, España",
-    "hero.title":"Herramientas de juego que se publican y llegan a mesas reales.",
-    "hero.lede":"Desarrollo <strong>sistemas y módulos para Foundry VTT</strong>: JavaScript en módulos ES, capas de interfaz propias, pipelines de datos y contenido de compendios, publicados en abierto, versionados y mantenidos junto a quienes los usan. Esto es mi proyecto de fin de semana; entre semana construyo automatizaciones y herramientas para startups y empresas.",
-    "hero.email":"Escríbeme",
-    "stat.projects":"Paquetes publicados","stat.systems":"Sistemas completos","stat.compat":"Compatibilidad Foundry","stat.years":"Años en 3D y juegos",
+    "nav.work":"Qué hago","nav.foundry":"Código abierto","nav.beyond":"3D y vídeo","nav.contact":"Contacto",
+    "hero.eyebrow":"IA · Automatización · Tecnología · Implementación",
+    "hero.title":"IA que funciona donde se trabaja.",
+    "hero.lede":"Desarrollo y lidero proyectos de IA y automatización que convierten problemas operativos en soluciones que funcionan.",
+    "hero.cta.projects":"Proyectos de código abierto",
+    "work.h":"En qué trabajo",
+    "work.lede":"Implanto IA y automatización en operaciones reales: entiendo cómo trabaja un equipo, detecto dónde la tecnología aporta valor de verdad y lo llevo hasta producción.",
+    "work.ai.h":"IA y automatización","work.ai.p":"Automatización de procesos de negocio, flujos de IA, integraciones, herramientas a medida.",
+    "work.tech.h":"Tecnología e implementación","work.tech.p":"Desde requisitos operativos hasta prototipos, sistemas en producción y despliegue.",
+    "work.teams.h":"Equipos y proyectos","work.teams.p":"Liderazgo de equipos multidisciplinares en tecnología, producto y negocio.",
+    "work.skill.1":"Análisis de procesos","work.skill.2":"Diseño de soluciones con IA","work.skill.3":"Integraciones y automatización","work.skill.4":"Gestión de proyectos técnicos","work.skill.5":"Trabajo directo con cliente",
     "systems.h":"Sistemas de juego","systems.note":"Implementaciones completas: fichas, compendios, automatización y localización.",
     "modules.h":"Módulos y contenido","modules.note":"Cada uno se instala desde su propio manifiesto y se actualiza vía GitHub Releases.",
     "craft.h":"Cómo está hecho","craft.note":"Las mismas respuestas que daría en una entrevista técnica.",
@@ -395,7 +420,7 @@ const I18N = {
     "craft.stack.p":"JavaScript (ESM), API de Foundry VTT, Handlebars, HTML/CSS, Git y GitHub Releases, esquemas JSON, localización con Babele, Unreal Engine 5, Blender, Substance, Photoshop, automatización con n8n / Make.",
     "craft.open.h":"Además","craft.open.p":"Todo esto es público y legible: clona cualquier repositorio y ahí está el historial completo — commits, incidencias, releases y cómo cambió el código entre Foundry v13 y v14.",
     "craft.open.link":"Ver todos los repositorios ↗",
-    "beyond.h":"3D, level art y vídeo","beyond.note":"La otra mitad del oficio.",
+    "beyond.h":"3D, level art y vídeo","beyond.note":"Más de 14 años en 3D y videojuegos — el oficio detrás de las herramientas.",
     "beyond.art.h":"Level art y 3D",
     "beyond.art.p":"Más de 14 años de 3D e imagen: level art y entornos en Unreal Engine 5, modelado y lookdev en Blender, archviz y configuradores en tiempo real. Colaboración actual: proyectos UE5 con Desert Saber.",
     "beyond.yt.h":"Gus Render Factory",
@@ -429,7 +454,7 @@ function shotMarkup(p){
   /* each slide walks a chain: bundled webp -> locally fetched png -> the image in the README */
   const chains = [].concat(
     p.local.map(l=>[l]),
-    p.remote.map((u,i)=>[`images/${p.repo}/r${i}.webp`, `images/${p.repo}/r${i}.png`, UA+u])
+    p.remote.map((u,i)=>[`images/${p.repo}/r${i}.png`, `images/${p.repo}/r${i}.webp`, UA+u])
   );
   if(!chains.length){
     return `<div class="shot"><div class="noshot"><b>${esc(p.title)}</b><span data-ui="noshot">${t("ui.noshot")}</span></div></div>`;
@@ -441,8 +466,8 @@ function shotMarkup(p){
   const multi = chains.length>1;
   return `<div class="shot" data-carousel tabindex="0" role="group" aria-roledescription="carousel" aria-label="${esc(p.title)}">
     <div class="track">${slides}</div>
-    ${multi?`<button class="nav-btn prev" type="button" data-step="-1" aria-label="${t("ui.prev")}">\u2039</button>
-    <button class="nav-btn next" type="button" data-step="1" aria-label="${t("ui.next")}">\u203a</button>
+    ${multi?`<button class="nav-btn prev" type="button" data-step="-1" aria-label="${t("ui.prev")}">‹</button>
+    <button class="nav-btn next" type="button" data-step="1" aria-label="${t("ui.next")}">›</button>
     <div class="counter"><span class="cur">1</span>/${chains.length}</div>
     <div class="dots">${dots}</div>`:""}
   </div>`;
